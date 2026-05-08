@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "../public/logo.png";
 import { Menu } from "lucide-react";
-import { cn } from "../libs/utils"; // Certifique-se de ter essa utilidade ou use template strings
+import { cn } from "../libs/utils"; 
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Ativa o modo "claro" após 50px de scroll
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
@@ -32,10 +31,9 @@ export default function Navbar() {
             <div className="transition-transform duration-300 group-hover:scale-105">
               <Image 
                 src={Logo} 
-                width={40} 
+                width={80} 
                 height={40} 
                 alt="Logo" 
-                className={scrolled ? "invert brightness-0" : ""} 
               />
             </div>
             <span className={`font-bold text-lg tracking-tight transition-colors duration-500 ${
