@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, Heart, ChevronDown } from "lucide-react";
 import Navbar from "../components/NavBar";
+import { Variants } from "framer-motion";
 
 export default function LandingPage() {
   // Variantes para animação de surgimento gradual (stagger)
@@ -14,11 +15,21 @@ export default function LandingPage() {
     }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  const itemVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: ["easeOut"],
+      },
+    },
   };
-
+  
   return (
     <main className="bg-white selection:bg-blue-200">
       <section className="py-32 px-6 bg-white overflow-hidden">

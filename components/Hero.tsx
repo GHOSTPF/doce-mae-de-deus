@@ -1,87 +1,137 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, Heart } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Heart, ArrowRight, ChevronDown } from "lucide-react";
 import CasaRosa from "../public/casa-rosa.png";
+import { useRef } from "react";
 
 export default function Hero() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-950">
-      <div className="absolute inset-0 z-0">
+    <section ref={ref} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#04090F]">
+      {/* Parallax BG */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
         <Image
           src={CasaRosa}
           alt="Background"
-          className="w-full h-full object-cover opacity-50 contrast-125"
-          style={{ filter: "sepia(0.3) saturate(1.5) hue-rotate(190deg) brightness(0.8)" }}
+          fill
+          priority
+          className="object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/60 via-slate-900/40 to-slate-950" />
-      </div>
+        
+        
+      </motion.div>
 
-      <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 pt-20">
-        <div className="flex flex-col md:flex-row items-end justify-between gap-12">
-          
-          <div className="flex-1">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="text-blue-300/70 text-lg md:text-2xl font-light tracking-[0.2em] uppercase mb-4 block">
-                ©2026
-              </span>
-              <h1 className="text-[12vw] md:text-[10vw] font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-cover bg-center"
-                  style={{ 
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073)',
-                    filter: 'hue-rotate(200deg) brightness(1.2)' 
-                  }}>
-                FAMÍLIA<span className="text-sky-400">*</span>
-              </h1>
-            </motion.div>
-          </div>
-
-          <div className="max-w-md text-right md:text-left flex flex-col items-end md:items-start gap-8 pb-10">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-blue-50 text-xl md:text-2xl font-medium leading-tight border-l-4 border-sky-500 pl-4"
-            >
-              Seja bem-vindo a nossa família para pertencer! Uma igreja em muitos lugares.
-            </motion.p>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col gap-4 w-full"
-            >
-              <button className="group flex items-center justify-between w-full md:w-64 bg-blue-900/30 backdrop-blur-md border border-blue-400/30 p-2 rounded-full hover:bg-sky-600 transition-all duration-500">
-                <span className="pl-6 font-bold uppercase text-sm tracking-widest text-white">Doe aqui!</span>
-                <div className="bg-sky-500 group-hover:bg-white group-hover:text-sky-600 p-3 rounded-full transition-colors duration-500">
-                  <Heart className="w-5 h-5 fill-current text-white group-hover:text-sky-600" />
-                </div>
-              </button>
-
-              <button className="group flex items-center justify-between w-full md:w-64 bg-white text-slate-900 p-2 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-500">
-                <span className="pl-6 font-bold uppercase text-sm tracking-widest">Conheça mais</span>
-                <div className="bg-slate-900 group-hover:bg-white group-hover:text-blue-600 p-3 rounded-full text-white transition-colors duration-500">
-                  <ArrowRight className="w-5 h-5" />
-                </div>
-              </button>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+      {/* Content */}
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 w-full max-w-screen-xl mx-auto px-6 pt-24 pb-20"
       >
-        <div className="w-6 h-10 border-2 border-sky-400/30 rounded-full flex justify-center pt-2 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
-          <div className="w-1 h-2 bg-sky-400 rounded-full shadow-[0_0_8px_#38bdf8]" />
+        <div className="flex flex-col lg:flex-row items-end justify-between gap-16 min-h-[80vh]">
+
+          {/* Left — Big title */}
+          <div className="flex-1 flex flex-col justify-end">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-sky-300/60 text-sm md:text-base font-light tracking-[0.3em] uppercase mb-6 block"
+            >
+              © 2026 — Doce Mãe de Deus
+            </motion.span>
+
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: 120, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                className="font-black leading-[0.82] tracking-[-0.04em] text-white"
+                style={{ fontSize: "clamp(4.5rem, 13vw, 11rem)" }}
+              >
+                FAMÍLIA
+                <span className="text-sky-400" style={{ fontFamily: "serif" }}>*</span>
+              </motion.h1>
+            </div>
+
+            {/* Thin horizontal rule */}
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformOrigin: "left" }}
+              className="mt-8 h-px w-full max-w-[360px] bg-gradient-to-r from-sky-500/70 to-transparent"
+            />
+          </div>
+
+          {/* Right — CTA block */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-xs w-full flex flex-col gap-7 pb-4"
+          >
+            {/* Quote */}
+            <p className="text-sky-50/80 text-lg leading-snug font-light border-l-[3px] border-sky-500 pl-4">
+              Seja bem-vindo à nossa família para pertencer!{" "}
+              <span className="text-white font-medium">Uma igreja em muitos lugares.</span>
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-3">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="group flex items-center justify-between w-full bg-sky-500/10 backdrop-blur-sm border border-sky-500/30 p-1.5 rounded-full hover:bg-sky-500 hover:border-sky-500 transition-all duration-500"
+              >
+                <span className="pl-5 font-bold uppercase text-xs tracking-[0.18em] text-white">Doe aqui</span>
+                <div className="bg-sky-500 group-hover:bg-white p-3 rounded-full transition-colors duration-500 flex items-center justify-center">
+                  <Heart className="w-4 h-4 fill-current text-white group-hover:text-sky-500 transition-colors duration-500" />
+                </div>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="group flex items-center justify-between w-full bg-white p-1.5 rounded-full hover:bg-sky-600 transition-all duration-500"
+              >
+                <span className="pl-5 font-bold uppercase text-xs tracking-[0.18em] text-slate-900 group-hover:text-white transition-colors duration-500">
+                  Conheça mais
+                </span>
+                <div className="bg-slate-900 group-hover:bg-white p-3 rounded-full transition-colors duration-500 flex items-center justify-center">
+                  <ArrowRight className="w-4 h-4 text-white group-hover:text-sky-600 transition-colors duration-500" />
+                </div>
+              </motion.button>
+            </div>
+          </motion.div>
         </div>
       </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+      >
+        <span className="text-sky-300/40 text-xs tracking-[0.2em] uppercase">Role</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-5 h-5 text-sky-400/50" />
+        </motion.div>
+      </motion.div>
+
+      {/* Bottom wave transition to white section */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="w-full h-16 md:h-20">
+          <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#ffffff" />
+        </svg>
+      </div>
     </section>
   );
 }

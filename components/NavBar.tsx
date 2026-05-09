@@ -3,82 +3,131 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../public/logo.png";
-import { Menu } from "lucide-react";
-import { cn } from "../libs/utils"; 
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const NAV_LINKS = ["Quem Somos", "Eventos", "Fotos", "Pedidos de Oração"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className="fixed w-full top-6 z-50 flex justify-center px-4">
-      <div 
-        className={`w-full max-w-6xl h-16 flex items-center justify-between px-6 rounded-2xl transition-all duration-500 ease-in-out border ${
-          scrolled 
-            ? "bg-white/80 backdrop-blur-xl border-slate-200 shadow-lg py-2" 
-            : "bg-white/10 backdrop-blur-md border-white/20 shadow-2xl py-4"
-        }`}
+    <>
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed w-full top-5 z-50 flex justify-center px-4"
       >
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="transition-transform duration-300 group-hover:scale-105">
-              <Image 
-                src={Logo} 
-                width={80} 
-                height={40} 
-                alt="Logo" 
-              />
+        <div
+          className={`w-full max-w-6xl flex items-center justify-between px-5 transition-all duration-500 ease-in-out ${
+            scrolled
+              ? "h-14 bg-white/90 backdrop-blur-xl rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-slate-100"
+              : "h-16 bg-white/8 backdrop-blur-md rounded-2xl border border-white/15"
+          }`}
+        >
+          {/* Logo + Name */}
+          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+            <div className="transition-transform duration-300 group-hover:scale-[1.04]">
+              <Image src={Logo} width={72} height={36} alt="Logo Doce Mãe de Deus" />
             </div>
-            <span className={`font-bold text-lg tracking-tight transition-colors duration-500 ${
-              scrolled ? "text-slate-900" : "text-white"
-            }`}>
+            <span
+              className={`font-bold text-base tracking-tight transition-colors duration-500 hidden sm:block ${
+                scrolled ? "text-slate-900" : "text-white"
+              }`}
+            >
               Doce Mãe de Deus
             </span>
           </Link>
-          
-          <div className="hidden md:flex items-center gap-6 text-sm font-semibold uppercase tracking-wider">
-            {["Quem somos", "Eventos", "Fotos", "Pedidos de Oração"].map((link) => (
-              <Link 
-                key={link} 
-                href="#" 
-                className={`transition-all duration-500 hover:opacity-100 ${
-                  scrolled ? "text-slate-600 hover:text-slate-900 opacity-80" : "text-white/70 hover:text-white"
+
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link}
+                href="#"
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
+                  scrolled
+                    ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                    : "text-white/60 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {link}
               </Link>
             ))}
           </div>
-        </div>
 
-        <div className="flex items-center gap-4">
-          {/* <div className="h-6 w-[1px] bg-white/20 mx-2 hidden sm:block" />
-          <Link href="#" className="hidden sm:block text-sm font-medium text-white/60 hover:text-white">
-            Sign in
-          </Link> */}
-          <Link 
-            href="#" 
-            className={`px-8 py-2.5 text-sm font-bold rounded-full transition-all duration-500 active:scale-95 border ${
-              scrolled 
-                ? "bg-slate-900 text-white border-slate-900 hover:bg-slate-800" 
-                : "bg-white text-slate-900 border-white hover:bg-opacity-90"
-            }`}
-          > 
-            Login
-          </Link>
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="#"
+              className={`px-5 py-2 text-sm font-bold rounded-full transition-all duration-500 active:scale-95 hidden sm:block ${
+                scrolled
+                  ? "bg-slate-900 text-white hover:bg-sky-600"
+                  : "bg-white text-slate-900 hover:bg-sky-100"
+              }`}
+            >
+              Login
+            </Link>
 
-          <button className={`md:hidden p-1 transition-colors ${scrolled ? "text-slate-900" : "text-white"}`}>
-            <Menu className="w-6 h-6" />
-          </button>
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={`md:hidden p-1.5 rounded-lg transition-colors ${
+                scrolled ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
+              }`}
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </motion.nav>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="fixed top-[5.5rem] left-4 right-4 z-40 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-100 p-4 flex flex-col gap-1 md:hidden"
+          >
+            {NAV_LINKS.map((link, i) => (
+              <motion.div
+                key={link}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <Link
+                  href="#"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                >
+                  {link}
+                </Link>
+              </motion.div>
+            ))}
+            <div className="border-t border-slate-100 mt-2 pt-3">
+              <Link
+                href="#"
+                className="block px-4 py-2.5 bg-slate-900 text-white text-center font-bold rounded-xl hover:bg-sky-600 transition-colors"
+              >
+                Login
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
