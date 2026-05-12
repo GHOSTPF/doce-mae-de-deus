@@ -6,19 +6,19 @@ import { CircularGallery, GalleryItem } from "./CircularGallery"; // Ajuste o ca
 
 const DATA_GRUPOS: GalleryItem[] = [
   {
-    common: "Grupo Jovens",
-    binomial: "Conexão e Propósito",
-    photo: { url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1000", text: "Jovens reunidos", by: "Igreja Local" }
+    common: "Retiro Vocacional",
+    binomial: "Vinde a Mim",
+    photo: { url: "retiro.png", text: "15 à 15 de Maio", by: "Casa Mãe" }
   },
   {
-    common: "Grupo Casais",
-    binomial: "Família Blindada",
-    photo: { url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1000", text: "Casais sorrindo", by: "Igreja Local" }
+    common: "Florescer na Menopausa",
+    binomial: "Café para mulheres",
+    photo: { url: "florescer.png", text: "Mulheres conversando", by: "Fascínios Recepções" }
   },
   {
-    common: "Grupo Kids",
-    binomial: "Pequenos Gigantes",
-    photo: { url: "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?q=80&w=1000", text: "Crianças brincando", by: "Igreja Local" }
+    common: "Ser Diferente",
+    binomial: "Grupo de Jovens",
+    photo: { url: "serdiferente.png", text: "Jovens reunidos", by: "Grupo jovem" }
   },
   {
     common: "Grupo Estudo",
@@ -86,7 +86,7 @@ export default function Grupos() {
         >
           <CircularGallery 
             items={DATA_GRUPOS} 
-            radius={800} // Aumentado para dar mais espaço no centro
+            radius={370} // Aumentado para dar mais espaço no centro
             autoRotateSpeed={0.3} 
           />
         </motion.div>

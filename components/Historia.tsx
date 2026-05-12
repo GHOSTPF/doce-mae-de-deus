@@ -44,18 +44,39 @@ export default function Historia() {
         </motion.p>
 
         {/* Title */}
-        <motion.h2
-          variants={fadeUp}
-          custom={1}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-4xl md:text-5xl font-black text-white leading-tight mb-16 tracking-tight"
+        <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
+
+  {/* TITULO */}
+        <div>
+          <motion.h2
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight"
+          >
+            Sobre a Comunidade
+            <br className="hidden md:block" />
+            Doce{" "}
+            <span className="text-sky-400">Mãe de Deus</span>
+          </motion.h2>
+        </div>
+
+        {/* IMAGEM */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex justify-center md:justify-end"
         >
-          Sobre a Comunidade{" "}
-          <br className="hidden md:block" />
-          Doce{" "}
-          <span className="text-sky-400">Mãe de Deus</span>
-        </motion.h2>
+          <img
+            src="/santa.png"
+            alt="Nossa Senhora"
+            className="w-[200px] md:w-[200px] object-contain drop-shadow-[0_0_60px_rgba(56,189,248,0.22)]"
+          />
+        </motion.div>
+
+      </div>
 
         <div className="grid md:grid-cols-[1fr_260px] gap-12 items-start">
           {/* Left text */}

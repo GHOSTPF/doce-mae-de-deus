@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
-  { name: "Vigília", href: "vigilia.pablotavaresdev.com.br" },
+  { name: "Vigília", href: "https://vigilia.pablotavaresdev.com.br" },
   { name: "Eventos", href: "/eventos" },
   { name: "Pedidos de Oração", href: "/pedidos-de-oracao" },
 ];
@@ -70,19 +70,37 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
-                  scrolled
-                    ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-                    : "text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+  const isExternal = link.href.startsWith("http");
+
+  return isExternal ? (
+    <a
+      key={link.name}
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
+        scrolled
+          ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          : "text-white/60 hover:text-white hover:bg-white/10"
+      }`}
+    >
+      {link.name}
+    </a>
+  ) : (
+    <Link
+      key={link.name}
+      href={link.href}
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
+        scrolled
+          ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          : "text-white/60 hover:text-white hover:bg-white/10"
+      }`}
+    >
+      {link.name}
+    </Link>
+  );
+})}
           </div>
 
           {/* Right side */}
@@ -128,22 +146,37 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             className="fixed top-[5.5rem] left-4 right-4 z-40 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-100 p-4 flex flex-col gap-1 md:hidden"
           >
-            {NAV_LINKS.map((link, i) => (
-              <motion.div
-                key={link.name}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.06 }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors"
-                >
-                  {link.name}
-                </Link>
-              </motion.div>
-            ))}
+            {NAV_LINKS.map((link) => {
+  const isExternal = link.href.startsWith("http");
+
+  return isExternal ? (
+    <a
+      key={link.name}
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
+        scrolled
+          ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          : "text-white/60 hover:text-white hover:bg-white/10"
+      }`}
+    >
+      {link.name}
+    </a>
+  ) : (
+    <Link
+      key={link.name}
+      href={link.href}
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
+        scrolled
+          ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          : "text-white/60 hover:text-white hover:bg-white/10"
+      }`}
+    >
+      {link.name}
+    </Link>
+  );
+})}
 
             <div className="border-t border-slate-100 mt-2 pt-3">
               <Link
