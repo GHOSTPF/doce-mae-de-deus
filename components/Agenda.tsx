@@ -4,16 +4,17 @@ import { ArrowRight, MapPin, Clock } from "lucide-react";
 import { useRef } from "react";
 
 const SCHEDULE = [
-  { name: "Cidade Empreende", day: "Segunda-feira", time: "20h", local: "Aud. Nações", highlight: false },
-  { name: "Feminina | Herança Real | Homens de Honra", day: "Segunda-feira", time: "20h", local: "Aud. Principal", highlight: false },
-  { name: "Andar de Cima", day: "Terça-feira", time: "20h", local: "Aud. Nações", highlight: false },
-  { name: "Campanha da Vitória", day: "Quarta-feira", time: "20h", local: "Aud. Principal", highlight: false },
-  { name: "30 Semanas Online", day: "Quinta-Feira", time: "20h", local: "Igreja da Cidade Online || Youtube", highlight: false },
-  { name: "30 Semanas Presencial (A partir de 10/04/26)", day: "Sexta-feira", time: "20h", local: "Aud. Principal", highlight: true },
-  { name: "Campanha da Vitória", day: "Sábado", time: "07h", local: "Aud. Comunidade", highlight: false },
-  { name: "Juventude Eleve", day: "Sábado", time: "19h", local: "Campus Colina", highlight: false },
-  { name: "Celebração Internacional", day: "Domingo", time: "10h", local: "Aud. Estações e Colégio Inspire", highlight: false },
-  { name: "Celebração Dominical", day: "Domingo", time: "8h | 10h | 17h | 19h", local: "", highlight: false },
+  { name: "Santa Missa", day: "Segunda-feira", time: "19h", local: "Casa Mãe - CDMD", highlight: false },
+  { name: "Santa Missa", day: "Terça a Sexta", time: "12h e 19h30", local: "Casa Mãe - CDMD", highlight: false },
+  { name: "Santa Missa", day: "Sábado", time: "12h e 17h", local: "Casa Mãe - CDMD", highlight: false },
+  { name: "Santa Missa", day: "Domingo", time: "6h e 17h", local: "Casa Mãe - CDMD", highlight: false },
+  { name: "Santa Missa", day: "Terça a Sábado", time: "7h", local: "CDMD - Bessa", highlight: false },
+  { name: "Santa Missa", day: "Domingo", time: "9h", local: "CDMD - Bessa", highlight: false },
+  { name: "Livraria", day: "Terça a Sexta", time: "15h às 17h45", local: "Aud. Nações", highlight: false },
+  { name: "Livraria", day: "Terça a Sexta", time: "19h às 20h30", local: "Aud. Nações", highlight: false },
+  { name: "Livraria", day: "Sábado", time: "15h às 18h30", local: "Aud. Nações", highlight: false },
+  { name: "Livraria", day: "Domingo", time: "Após a missa das 06h00", local: "Aud. Nações", highlight: false },
+  { name: "Livraria", day: "Domingo", time: "15h às 19h00 (fecha durante a missa das 17h00)", local: "Aud. Nações", highlight: false },
 ];
 
 const fadeUp: Variants = {

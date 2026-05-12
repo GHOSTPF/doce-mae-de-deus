@@ -43,7 +43,7 @@ export default function Contato() {
             <motion.h2
               variants={fadeUp} custom={1} initial="hidden" animate={inView ? "visible" : "hidden"}
               className="font-black text-4xl md:text-5xl text-white leading-[1.0] tracking-tight mb-6">
-              Fique por<br />dentro de tudo<br />aqui da CDMC!
+              Fique por<br />dentro de tudo<br />aqui da CDMD!
             </motion.h2>
 
             <motion.p

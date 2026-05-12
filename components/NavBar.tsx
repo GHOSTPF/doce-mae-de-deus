@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +7,11 @@ import Logo from "../public/logo.png";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const NAV_LINKS = ["Quem Somos", "Eventos", "Fotos", "Pedidos de Oração"];
+const NAV_LINKS = [
+  { name: "Vigília", href: "vigilia.pablotavaresdev.com.br" },
+  { name: "Eventos", href: "/eventos" },
+  { name: "Pedidos de Oração", href: "/pedidos-de-oracao" },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,7 +19,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -23,7 +32,10 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className="fixed w-full top-5 z-50 flex justify-center px-4"
       >
         <div
@@ -33,11 +45,20 @@ export default function Navbar() {
               : "h-16 bg-white/8 backdrop-blur-md rounded-2xl border border-white/15"
           }`}
         >
-          {/* Logo + Name */}
-          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 group flex-shrink-0"
+          >
             <div className="transition-transform duration-300 group-hover:scale-[1.04]">
-              <Image src={Logo} width={72} height={36} alt="Logo Doce Mãe de Deus" />
+              <Image
+                src={Logo}
+                width={72}
+                height={36}
+                alt="Logo Doce Mãe de Deus"
+              />
             </div>
+
             <span
               className={`font-bold text-base tracking-tight transition-colors duration-500 hidden sm:block ${
                 scrolled ? "text-slate-900" : "text-white"
@@ -47,19 +68,19 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop nav links */}
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <Link
-                key={link}
-                href="#"
+                key={link.name}
+                href={link.href}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-500 ${
                   scrolled
                     ? "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                     : "text-white/60 hover:text-white hover:bg-white/10"
                 }`}
               >
-                {link}
+                {link.name}
               </Link>
             ))}
           </div>
@@ -67,7 +88,7 @@ export default function Navbar() {
           {/* Right side */}
           <div className="flex items-center gap-3">
             <Link
-              href="#"
+              href="/login"
               className={`px-5 py-2 text-sm font-bold rounded-full transition-all duration-500 active:scale-95 hidden sm:block ${
                 scrolled
                   ? "bg-slate-900 text-white hover:bg-sky-600"
@@ -77,15 +98,21 @@ export default function Navbar() {
               Login
             </Link>
 
-            {/* Mobile hamburger */}
+            {/* Mobile button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={`md:hidden p-1.5 rounded-lg transition-colors ${
-                scrolled ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"
+                scrolled
+                  ? "text-slate-700 hover:bg-slate-100"
+                  : "text-white hover:bg-white/10"
               }`}
               aria-label="Menu"
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -103,23 +130,24 @@ export default function Navbar() {
           >
             {NAV_LINKS.map((link, i) => (
               <motion.div
-                key={link}
+                key={link.name}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.06 }}
               >
                 <Link
-                  href="#"
+                  href={link.href}
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors"
                 >
-                  {link}
+                  {link.name}
                 </Link>
               </motion.div>
             ))}
+
             <div className="border-t border-slate-100 mt-2 pt-3">
               <Link
-                href="#"
+                href="/login"
                 className="block px-4 py-2.5 bg-slate-900 text-white text-center font-bold rounded-xl hover:bg-sky-600 transition-colors"
               >
                 Login
